@@ -14,5 +14,7 @@
         <li>{{ $car }}</li>
     @endforeach
     </ul>
+
+    <a href="/a-propos">A propos</a>
 </body>
 </html>
