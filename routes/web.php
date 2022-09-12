@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home', [
+        'name' => 'toto',
+        'html' => '<p>Salut</p>',
+        'cars' => ['Ferrari', 'Porsche', 'Renault'],
+    ]);
 });
+
+Route::get('/home', [HomeController::class, 'index']);
