@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laravel</title>
+@extends('layouts.base')
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body>
+@section('title')
+    Accueil - @parent
+@endsection
+
+@section('content')
     <h1>Coucou {{ $name }}</h1>
     {!! $html !!}
 
@@ -18,5 +15,4 @@
     </ul>
 
     <a href="/a-propos">A propos</a>
-</body>
-</html>
+@endsection
