@@ -9,7 +9,9 @@
     <ul>
         @foreach ($team as $user)
             <li>
-                {{ $user['name'].' - '.$user['job'] }}
+                <a href="{{ route('about.show', ['user' => $user['name']]) }}">
+                    {{ $user['name'].' - '.$user['job'] }}
+                </a>
             </li>
         @endforeach
 

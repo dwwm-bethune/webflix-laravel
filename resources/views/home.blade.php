@@ -14,5 +14,5 @@
     @endforeach
     </ul>
 
-    <a href="/a-propos">A propos</a>
+    <a href="{{ route('about') }}">A propos</a>
 @endsection

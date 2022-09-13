@@ -15,8 +15,8 @@
         <div class="flex items-center max-w-7xl mx-auto px-3">
             <h1 class="text-xl font-bold mr-4">{{ config('app.name') }}</h1>
             <ul class="flex">
-                <li><a class="inline-block py-4 px-2" href="/">Accueil</a></li>
-                <li><a class="inline-block py-4 px-2" href="/a-propos">A propos</a></li>
+                <li><a class="inline-block py-4 px-2" href="{{ route('home') }}">Accueil</a></li>
+                <li><a class="inline-block py-4 px-2" href="{{ route('about') }}">A propos</a></li>
             </ul>
         </div>
     </header>

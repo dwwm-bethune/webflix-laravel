@@ -21,8 +21,8 @@ Route::get('/', function () {
         'html' => '<p>Salut</p>',
         'cars' => ['Ferrari', 'Porsche', 'Renault'],
     ]);
-});
+})->name('home');
 
 Route::get('/home', [HomeController::class, 'index']);
-Route::get('/a-propos', [AboutController::class, 'index']);
-Route::get('/a-propos/{user}', [AboutController::class, 'show']);
+Route::get('/a-propos', [AboutController::class, 'index'])->name('about');
+Route::get('/a-propos/{user}', [AboutController::class, 'show'])->name('about.show');
