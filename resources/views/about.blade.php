@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <h1>A propos</h1>
+    <h1 class="font-bold text-3xl mb-3">A propos</h1>
     <ul>
         @foreach ($team as $user)
             <li>

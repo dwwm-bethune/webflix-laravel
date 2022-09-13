@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <h1>Coucou {{ $name }}</h1>
+    <h1 class="font-bold text-3xl mb-3">Accueil {{ $name }}</h1>
     {!! $html !!}
 
     <ul>
