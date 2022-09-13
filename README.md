@@ -145,8 +145,19 @@ Chaque table de la base de données se verra attribuer un modèle (une classe PH
 
 Je vous laisse créer le modèle Movie. Vous allez créer deux routes :
 
-- /exercice/films -> Vous utiliserez simplement le modèle pour afficher tous les films
-- /exercice/film/{id} -> Vous utiliserez simplement le modèle pour afficher le film qui a l'id présent dans l'URL
+- GET /films -> Vous utiliserez simplement le modèle pour afficher tous les films
+- GET /film/{id} -> Vous utiliserez simplement le modèle pour afficher le film qui a l'id présent dans l'URL
+- GET /films/creer va nous permettre d'afficher un formulaire pour ajouter un film
+- POST /films va nous permettre de traiter le formulaire pour ajouter un film
+- Pour les validations :
+    - title => Obligatoire, unique avec 2 caractères minimum
+    - synopsis => Obligatoire avec 10 caractères minimum
+    - duration => Nombre positif obligatoire
+    - youtube => Pas obligatoire
+    - cover => ON NE FAIT PAS
+    - released_at => Date valide mais non obligatoire
+    - category_id => BONUS: Avoir un select avec toutes les catégories
+                     On vérifiera que la valeur existe dans la table catégories
 
 ## Les factories et les seeders
 

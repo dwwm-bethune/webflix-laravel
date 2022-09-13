@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -19,5 +20,28 @@ class CategoryController extends Controller
             // 'category' => Category::findOrFail($id),
             'category' => $category,
         ]);
+    }
+
+    public function create()
+    {
+        return view('categories.create');
+    }
+
+    public function store(Request $request)
+    {
+        // dump($request->name);
+        // dump(request()->name);
+        // dump(request('name'));
+
+        $request->validate([
+            'name' => 'required|min:2|unique:categories',
+        ]);
+
+        $category = new Category();
+        $category->name = $request->name;
+        $category->save();
+
+        // On redirige vers la liste
+        return redirect()->route('categories');
     }
 }

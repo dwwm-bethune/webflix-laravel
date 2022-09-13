@@ -5,6 +5,8 @@
 @endsection
 
 @section('content')
+    <a href="{{ route('categories.create') }}">Créer une catégorie</a>
+
     <div>
         @foreach ($categories as $category)
             <div>
