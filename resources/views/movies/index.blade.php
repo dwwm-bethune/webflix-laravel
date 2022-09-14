@@ -20,7 +20,11 @@
                                 {{ $movie->title }}
                             </a>
                         </h2>
-                        <p>{{ $movie->category->name }}</p>
+                        <p>
+                            {{ $movie->category->name }} |
+                            {{ $movie->released_at->translatedFormat('d F Y') }} |
+                            {{ $movie->duration }}
+                        </p>
                     </div>
                 </div>
             </div>
