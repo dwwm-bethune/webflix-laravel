@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MovieController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,3 +33,8 @@ Route::get('/categories', [CategoryController::class, 'index'])->name('categorie
 Route::get('/categories/nouvelle', [CategoryController::class, 'create'])->name('categories.create');
 Route::post('/categories/nouvelle', [CategoryController::class, 'store']);
 Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
+
+Route::get('/films', [MovieController::class, 'index'])->name('movies');
+Route::get('/films/creer', [MovieController::class, 'create'])->name('movies.create');
+Route::post('/films/creer', [MovieController::class, 'store']);
+Route::get('/films/{movie}', [MovieController::class, 'show'])->name('movies.show');
