@@ -20,9 +20,13 @@
                                 {{ $movie->title }}
                             </a>
                         </h2>
-                        <p>
+                        <p class="mb-4">
+                            @if ($movie->category)
                             {{ $movie->category->name }} |
+                            @endif
+                            @if ($movie->released_at)
                             {{ $movie->released_at->translatedFormat('d F Y') }} |
+                            @endif
                             {{ $movie->duration }}
                         </p>
                     </div>

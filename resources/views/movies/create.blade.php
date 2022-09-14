@@ -11,7 +11,7 @@
         @endforeach
     </ul>
 
-    <form method="post" class="w-1/2 mx-auto">
+    <form method="post" class="w-1/2 mx-auto" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-3">
@@ -50,6 +50,14 @@
             <label class="block mb-1" for="released_at">Date de sortie</label>
             <input class="w-full border-gray-300 @error('released_at') border-red-400 @enderror" type="date" name="released_at" id="released_at" value="{{ old('released_at') }}">
             @error('released_at')
+                <p class="text-red-500">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label class="block mb-1" for="cover">Image</label>
+            <input class="w-full border-gray-300 @error('cover') border-red-400 @enderror" type="file" name="cover" id="cover" value="{{ old('cover') }}">
+            @error('cover')
                 <p class="text-red-500">{{ $message }}</p>
             @enderror
         </div>

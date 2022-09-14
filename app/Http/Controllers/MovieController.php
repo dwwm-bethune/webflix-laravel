@@ -37,8 +37,13 @@ class MovieController extends Controller
             'duration' => 'required|integer|min:0',
             'youtube' => 'nullable|string',
             'released_at' => 'nullable|date',
-            'category_id' => 'exists:categories,id',
+			'cover' => 'nullable|image|max:2048',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
+
+		if ($request->hasFile('cover')) {
+			$validated['cover'] = '/storage/'.$request->file('cover')->store('covers');
+		}
 
 		Movie::create($validated);
 
