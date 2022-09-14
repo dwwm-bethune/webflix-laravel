@@ -44,4 +44,35 @@ class CategoryController extends Controller
         // On redirige vers la liste
         return redirect()->route('categories');
     }
+
+    public function edit(Category $category)
+    {
+        return view('categories.edit', [
+            'category' => $category,
+        ]);
+    }
+
+    public function update(Category $category, Request $request)
+    {
+        $request->validate([
+            // On exclut la catégorie qu'on modifie de la vérification du doublon
+            'name' => 'required|min:2|unique:categories,name,'.$category->id,
+        ]);
+
+        // $category->name = $request->name;
+        // $category->save();
+
+        $category->update([
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('categories')->with('status', 'La catégorie '.$category->id.' a été modifiée.');
+    }
+
+    public function destroy(Category $category)
+    {
+        $category->delete();
+
+        return redirect()->route('categories')->with('status', 'La catégorie '.$category->name.' a été supprimée.');
+    }
 }

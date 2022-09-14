@@ -33,6 +33,9 @@ Route::get('/categories', [CategoryController::class, 'index'])->name('categorie
 Route::get('/categories/nouvelle', [CategoryController::class, 'create'])->name('categories.create');
 Route::post('/categories/nouvelle', [CategoryController::class, 'store']);
 Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
+Route::get('/categories/{category}/modifier', [CategoryController::class, 'edit'])->name('categories.edit');
+Route::put('/categories/{category}/modifier', [CategoryController::class, 'update']);
+Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.delete');
 
 Route::get('/films', [MovieController::class, 'index'])->name('movies');
 Route::get('/films/creer', [MovieController::class, 'create'])->name('movies.create');
