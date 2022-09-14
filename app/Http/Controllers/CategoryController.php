@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Movie;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -19,6 +20,9 @@ class CategoryController extends Controller
         return view('categories.show', [
             // 'category' => Category::findOrFail($id),
             'category' => $category,
+            // 'movies' => $category->movies,
+            'movies' => $category->movies()->paginate(3),
+            // 'movies' => Movie::where('category_id', $category->id)->paginate(3),
         ]);
     }
 

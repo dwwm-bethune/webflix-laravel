@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'moviedb' => [
+        'key' => env('MOVIEDB_API_KEY'),
+    ],
+
 ];

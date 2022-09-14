@@ -20,6 +20,7 @@
                                 {{ $movie->title }}
                             </a>
                         </h2>
+                        <p>{{ $movie->category->name }}</p>
                     </div>
                 </div>
             </div>
