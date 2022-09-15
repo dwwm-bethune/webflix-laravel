@@ -41,3 +41,9 @@ Route::get('/films', [MovieController::class, 'index'])->name('movies');
 Route::get('/films/creer', [MovieController::class, 'create'])->name('movies.create');
 Route::post('/films/creer', [MovieController::class, 'store']);
 Route::get('/films/{movie}', [MovieController::class, 'show'])->name('movies.show');
+// Faire la modification des films
+// (Si l'image change, on upload la nouvelle et on supprime l'ancienne sinon on fait rien)
+Route::get('/films/{movie}/modifier', [MovieController::class, 'edit'])->name('movies.edit');
+Route::put('/films/{movie}/modifier', [MovieController::class, 'update']);
+// Faire la suppression d'un film (Supprimer la cover du film)
+Route::delete('/films/{movie}', [MovieController::class, 'destroy'])->name('movies.delete');
