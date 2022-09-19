@@ -75,6 +75,15 @@
             @enderror
         </div>
 
+        <div class="mb-3">
+            <label class="block mb-1" for="actor_ids">Acteurs</label>
+            <select class="select2 w-full" name="actor_ids[]" id="actor_ids" multiple>
+                @foreach ($actors as $actor)
+                <option value="{{ $actor->id }}">{{ $actor->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <button>Ajouter</button>
     </form>
 @endsection

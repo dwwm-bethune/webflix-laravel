@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Actor;
 use App\Models\Category;
 use App\Models\Movie;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class MovieController extends Controller
     {
         return view('movies.create', [
             'categories' => Category::all(),
+            'actors' => Actor::all(),
         ]);
     }
 
@@ -40,13 +42,16 @@ class MovieController extends Controller
             'released_at' => 'nullable|date',
             'cover' => 'nullable|image|max:2048',
             'category_id' => 'nullable|exists:categories,id',
+            'actor_ids' => 'nullable|exists:actors,id',
         ]);
 
         if ($request->hasFile('cover')) {
             $validated['cover'] = '/storage/'.$request->file('cover')->store('covers');
         }
 
-        Movie::create($validated);
+        // On doit exclure le champ actor_ids du tableau $validated
+        $movie = Movie::create(collect($validated)->except('actor_ids')->all());
+        $movie->actors()->attach($validated['actor_ids']);
 
         return redirect()->route('movies');
     }
