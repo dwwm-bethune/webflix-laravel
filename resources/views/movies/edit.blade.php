@@ -76,6 +76,20 @@
             @enderror
         </div>
 
+        <div class="mb-3">
+            <label class="block mb-1" for="actor_ids">Acteurs</label>
+            <select class="select2 w-full" name="actor_ids[]" id="actor_ids" multiple>
+                @foreach ($actors as $actor)
+                <option
+                    @selected(in_array($actor->id, old('actor_ids', $movie->actors->pluck('id')->all())))
+                    class="mb-3 mr-3"
+                    value="{{ $actor->id }}">
+                    {{ $actor->name }}
+                </option>
+                @endforeach
+            </select>
+        </div>
+
         <button>Modifier</button>
     </form>
 @endsection

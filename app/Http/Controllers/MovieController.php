@@ -61,6 +61,7 @@ class MovieController extends Controller
         return view('movies.edit', [
             'categories' => Category::all(),
             'movie' => $movie,
+            'actors' => Actor::all(),
         ]);
     }
 
@@ -74,6 +75,7 @@ class MovieController extends Controller
             'released_at' => 'nullable|date',
             'cover' => 'nullable|image|max:2048',
             'category_id' => 'nullable|exists:categories,id',
+            'actor_ids' => 'nullable|exists:actors,id',
         ]);
 
         if ($request->hasFile('cover')) {
@@ -85,7 +87,9 @@ class MovieController extends Controller
             $validated['cover'] = '/storage/'.$request->file('cover')->store('covers');
         }
 
-        $movie->update($validated);
+        $movie->update(collect($validated)->except('actor_ids')->all());
+        // S'assurer qu'on n'a pas de doublons
+        $movie->actors()->sync($validated['actor_ids']);
 
         return redirect()->route('movies');
     }
