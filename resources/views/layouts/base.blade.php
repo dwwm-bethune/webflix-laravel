@@ -18,6 +18,7 @@
                 <li><a class="inline-block py-4 px-2" href="{{ route('home') }}">Accueil</a></li>
                 <li><a class="inline-block py-4 px-2" href="{{ route('categories') }}">Catégories</a></li>
                 <li><a class="inline-block py-4 px-2" href="{{ route('movies') }}">Films</a></li>
+                <li><a class="inline-block py-4 px-2" href="{{ route('actors.index') }}">Acteurs</a></li>
                 <li><a class="inline-block py-4 px-2" href="{{ route('about') }}">A propos</a></li>
             </ul>
         </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ActorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
@@ -47,3 +48,5 @@ Route::get('/films/{movie}/modifier', [MovieController::class, 'edit'])->name('m
 Route::put('/films/{movie}/modifier', [MovieController::class, 'update']);
 // Faire la suppression d'un film (Supprimer la cover du film)
 Route::delete('/films/{movie}', [MovieController::class, 'destroy'])->name('movies.delete');
+
+Route::resource('actors', ActorController::class);
