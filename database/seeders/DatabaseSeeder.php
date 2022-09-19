@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Actor;
 use App\Models\Category;
 use App\Models\Movie;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Http;
 
@@ -27,6 +28,11 @@ class DatabaseSeeder extends Seeder
         // Movie::factory(19)->create(function () use ($categories) {
         //     return ['category_id' => $categories->random()];
         // });
+
+        User::factory()->create([
+            'email' => 'fiorella@boxydev.com',
+            'name' => 'Fiorella',
+        ]);
 
         $key = config('services.moviedb.key');
         $client = Http::withoutVerifying();
