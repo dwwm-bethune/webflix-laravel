@@ -20,6 +20,24 @@
                 (Né le {{ $actor->birthday->translatedFormat('d/m/Y') }})
                 @endif
             </div>
+
+            @if ($actor->movies)
+            <div class="mt-3">
+                <h2 class="text-2xl">Films</h2>
+                <div class="flex">
+                    @foreach ($actor->movies as $movie)
+                        <div class="w-1/5 mr-5">
+                            <a href="{{ route('movies.show', $movie) }}">
+                                @if ($movie->cover)
+                                <img class="rounded" src="{{ $movie->cover }}">
+                                @endif
+                                <h3>{{ $movie->title }}</h3>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 @endsection

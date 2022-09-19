@@ -17,6 +17,24 @@
             <div class="my-3">
                 {{ $movie->synopsis }}
             </div>
+
+            @if ($movie->actors)
+            <div class="mt-3">
+                <h2 class="text-2xl">Casting</h2>
+                <div class="flex">
+                    @foreach ($movie->actors as $actor)
+                        <div class="w-1/5 mr-5">
+                            <a href="{{ route('actors.show', $actor) }}">
+                                @if ($actor->avatar)
+                                <img class="rounded" src="{{ $actor->avatar }}">
+                                @endif
+                                <h3>{{ $actor->name }}</h3>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 @endsection
