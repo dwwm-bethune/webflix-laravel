@@ -12,8 +12,17 @@ class MovieController extends Controller
 {
     public function index()
     {
+        // Vérif de parano dev back
+        abort_if(! in_array(request('order_by', 'title'), ['title', 'released_at']), 404);
+
         return view('movies.index', [
-            'movies' => Movie::with('category')->paginate(10),
+            'movies' => Movie::with('category')
+                ->when(request('filters.categories'), function ($query) {
+                    $query->whereIn('category_id', request('filters.categories'));
+                })
+                ->orderBy(request('order_by', 'title'))
+                ->paginate(10)->withQueryString(),
+            'categories' => Category::all(),
         ]);
     }
 
