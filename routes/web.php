@@ -2,11 +2,10 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ActorController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -54,28 +53,12 @@ Route::delete('/films/{movie}', [MovieController::class, 'destroy'])->name('movi
 
 Route::resource('actors', ActorController::class);
 
-Route::get('/login', function () {
-    // Auth::login(User::find(1));
-    return view('auth.login');
-})->name('login')->middleware('guest');
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login', [LoginController::class, 'store']);
+Route::get('/logout', [LoginController::class, 'destroy'])->name('logout')->middleware('auth');
 
-Route::post('/login', function (Request $request) {
-    $credentials = $request->only('email', 'password');
-    $remember = $request->filled('remember');
-
-    if (Auth::attempt($credentials, $remember)) {
-        return redirect('/films');
-    }
-
-    return back()->withInput()
-        ->withErrors(['email' => 'Le login ou le mot de passe sont invalides.']);
-});
-
-Route::get('/logout', function () {
-    Auth::logout();
-
-    return redirect('/films');
-})->name('logout')->middleware('auth');
+Route::get('/inscription');
+Route::post('/inscription');
 
 Route::get('/profil', function () {
     return Auth::user();
