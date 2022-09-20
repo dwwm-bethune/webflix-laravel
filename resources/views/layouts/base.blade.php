@@ -31,7 +31,7 @@
                     {{ Auth::user()->name }}
                     <a href="{{ route('logout') }}">Déconnexion</a>
                     @else
-                    <a href="{{ route('login') }}">Login</a>
+                    <a href="{{ route('login') }}" class="mr-4">Login</a>
                     <a href="{{ route('register') }}">Inscription</a>
                     @endauth
                 </div>
