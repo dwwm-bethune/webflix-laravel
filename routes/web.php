@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ActorController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
@@ -57,8 +58,8 @@ Route::get('/login', [LoginController::class, 'index'])->name('login')->middlewa
 Route::post('/login', [LoginController::class, 'store']);
 Route::get('/logout', [LoginController::class, 'destroy'])->name('logout')->middleware('auth');
 
-Route::get('/inscription');
-Route::post('/inscription');
+Route::get('/inscription', [RegisterController::class, 'index'])->name('register')->middleware('guest');
+Route::post('/inscription', [RegisterController::class, 'store'])->middleware('guest');
 
 Route::get('/profil', function () {
     return Auth::user();
