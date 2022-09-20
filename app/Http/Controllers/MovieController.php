@@ -61,6 +61,8 @@ class MovieController extends Controller
 
     public function edit(Movie $movie)
     {
+        $this->authorize('update', $movie);
+
         return view('movies.edit', [
             'categories' => Category::all(),
             'movie' => $movie,
@@ -70,6 +72,8 @@ class MovieController extends Controller
 
     public function update(Movie $movie, Request $request)
     {
+        $this->authorize('update', $movie);
+
         $validated = $request->validate([
             'title' => 'required|min:2', // '|unique:movies'
             'synopsis' => 'required|min:10',
@@ -99,6 +103,8 @@ class MovieController extends Controller
 
     public function destroy(Movie $movie)
     {
+        $this->authorize('delete', $movie);
+
         Storage::delete(str($movie->cover)->remove('/storage/'));
         $movie->delete();
 

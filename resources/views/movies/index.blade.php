@@ -5,7 +5,9 @@
 @endsection
 
 @section('content')
+    @auth
     <a href="{{ route('movies.create') }}" class="bg-blue-500 py-2 px-3 text-white rounded-lg hover:bg-blue-400 duration-300">Créer un film</a>
+    @endauth
 
     <div class="flex flex-wrap -mx-3 py-8">
         @foreach ($movies as $movie)
@@ -30,12 +32,17 @@
                             {{ $movie->duration }}
                         </p>
 
+                        @can('update', $movie)
                         <a class="bg-gray-500 py-2 px-3 text-white rounded-lg hover:bg-gray-400 duration-300 inline-block" href="{{ route('movies.edit', $movie->id) }}">Modifier</a>
+                        @endcan
+
+                        @can('delete', $movie)
                         <form action="{{ route('movies.delete', $movie->id) }}" method="post" class="inline">
                             @csrf
                             @method('delete')
                             <button class="bg-red-500 py-2 px-3 text-white rounded-lg hover:bg-red-400 duration-300 inline-block">Supprimer</button>
                         </form>
+                        @endcan
                     </div>
                 </div>
             </div>
