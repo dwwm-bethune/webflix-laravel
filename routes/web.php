@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -42,8 +44,8 @@ Route::put('/categories/{category}/modifier', [CategoryController::class, 'updat
 Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.delete');
 
 Route::get('/films', [MovieController::class, 'index'])->name('movies');
-Route::get('/films/creer', [MovieController::class, 'create'])->name('movies.create');
-Route::post('/films/creer', [MovieController::class, 'store']);
+Route::get('/films/creer', [MovieController::class, 'create'])->name('movies.create')->middleware('verified');
+Route::post('/films/creer', [MovieController::class, 'store'])->middleware('verified');
 Route::get('/films/{movie}', [MovieController::class, 'show'])->name('movies.show');
 // Faire la modification des films
 // (Si l'image change, on upload la nouvelle et on supprime l'ancienne sinon on fait rien)
@@ -60,6 +62,22 @@ Route::get('/logout', [LoginController::class, 'destroy'])->name('logout')->midd
 
 Route::get('/inscription', [RegisterController::class, 'index'])->name('register')->middleware('guest');
 Route::post('/inscription', [RegisterController::class, 'store'])->middleware('guest');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/films');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:2,1'])->name('verification.send');
 
 Route::get('/profil', function () {
     return Auth::user();

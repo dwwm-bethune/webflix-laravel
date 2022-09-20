@@ -32,6 +32,7 @@
                     <a href="{{ route('logout') }}">Déconnexion</a>
                     @else
                     <a href="{{ route('login') }}">Login</a>
+                    <a href="{{ route('register') }}">Inscription</a>
                     @endauth
                 </div>
             </div>
