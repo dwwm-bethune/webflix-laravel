@@ -49,8 +49,11 @@ class MovieController extends Controller
             $validated['cover'] = '/storage/'.$request->file('cover')->store('covers');
         }
 
+        // $validated['user_id'] = $request->user()->id;
+
         // On doit exclure le champ actor_ids du tableau $validated
-        $movie = Movie::create(collect($validated)->except('actor_ids')->all());
+        // $movie = Movie::create(collect($validated)->except('actor_ids')->all());
+        $movie = $request->user()->movies()->create(collect($validated)->except('actor_ids')->all());
         $movie->actors()->attach($validated['actor_ids']);
 
         return redirect()->route('movies');
