@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('cover')->nullable();
             $table->timestamp('released_at')->nullable();
             $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }
