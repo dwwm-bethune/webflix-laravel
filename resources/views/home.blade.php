@@ -5,8 +5,10 @@
 @endsection
 
 @section('content')
+    <livewire:counter />
+    <livewire:user />
+
     <h1 class="font-bold text-3xl mb-3">Accueil {{ $name }}</h1>
-    {!! $html !!}
 
     <ul>
     @foreach ($cars as $car)
