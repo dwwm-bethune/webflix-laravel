@@ -7,11 +7,16 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
+use App\Models\Movie;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Laravel\Cashier\Exceptions\IncompletePayment;
+use Stripe\Exception\CardException;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,3 +88,59 @@ Route::post('/reset-password', [ResetPasswordController::class, 'store'])
 Route::get('/profil', function () {
     return Auth::user();
 })->middleware('auth');
+
+Route::get('/panier', [CartController::class, 'index'])->name('cart');
+Route::post('/panier/{movie}', [CartController::class, 'store'])->name('cart.store');
+
+Route::post('/paiement', function (Request $request) {
+    // On récupère le film à payer
+    $movie = Movie::findOrFail($request->movie);
+
+    // On crée un client Stripe (Optionnel)
+    $request->user()->createOrGetStripeCustomer();
+    // $request->user()->updateDefaultPaymentMethod($request->payment_method);
+
+    // On fait le paiement (simple sans facture)
+    $request->user()->charge(
+        ceil($movie->price * 1.20), $request->payment_method
+    );
+    // Paiement complexe avec facture stripe
+    // $request->user()->invoiceFor(
+    //     'Achat de '.$movie->title, ceil($movie->price * 1.20)
+    // );
+
+    // @todo (Créer une table et stocker l'historique des paiements => Prix payé, date, l'ID du film, l'ID du client)
+    // Stocker le paiement dans une table "orders"
+
+    return back()
+        ->with('payment_success', 'Votre film '.$movie->title.' a été payé.');
+})->name('pay')->middleware('auth');
+
+Route::post('/paiement-2', function (Request $request) {
+    $price = collect(session('products'))->sum('price');
+
+    // On crée un client Stripe (Optionnel)
+    $request->user()->createOrGetStripeCustomer();
+
+    // On fait le paiement (simple sans facture)
+    try {
+        $request->user()->charge(
+            ceil($price * 1.20), $request->payment_method
+        );
+        // Paiement impossible
+    } catch (CardException $e) {
+        return back()->withErrors([
+            'payment' => $e->getMessage()
+        ]);
+        // 3D secure
+    } catch (IncompletePayment $exception) {
+        return redirect()->route(
+            'cashier.payment',
+            [$exception->payment->id, 'redirect' => route('cart')]
+        )->with('payment_success', 'Votre panier a été payé.');
+    }
+
+    session()->forget('products');
+
+    return back()->with('payment_success', 'Votre panier a été payé.');
+})->name('pay-2')->middleware('auth');

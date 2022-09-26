@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('synopsis');
             $table->integer('duration');
+            $table->integer('price');
             $table->string('youtube')->nullable();
             $table->string('cover')->nullable();
             $table->timestamp('released_at')->nullable();

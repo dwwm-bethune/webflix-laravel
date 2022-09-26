@@ -18,6 +18,29 @@
                 {{ $movie->synopsis }}
             </div>
 
+            <div class="font-bold text-xl">
+                <p>Prix TTC: {{ $movie->price_with_tax }}</p>
+                <p>Prix HT: {{ $movie->price_without_tax }}</p>
+            </div>
+
+            <form method="post" action="{{ route('cart.store', $movie->id) }}">
+                @csrf
+                <button class="bg-blue-500 px-4 py-2 text-white rounded-xl inline-block">Ajouter au panier</button>
+            </form>
+
+            @if (session('payment_success'))
+                {{ session('payment_success') }}
+            @else
+                <form action="{{ route('pay') }}" method="post" id="payment-form">
+                    @csrf
+                    <div class="bg-white px-4 py-2 my-3" id="card-element"></div>
+                    <div class="text-red-500" id="card-error"></div>
+                    <input type="hidden" name="movie" value="{{ $movie->id }}">
+                    <input type="hidden" name="payment_method">
+                    <button class="bg-blue-500 px-4 py-2 text-white rounded-xl" id="card-button">Payer</button>
+                </form>
+            @endif
+
             @if ($movie->actors)
             <div class="mt-3">
                 <h2 class="text-2xl">Casting</h2>

@@ -29,6 +29,23 @@ class Movie extends Model
         });
     }
 
+    // Ancienne méthode pour les attributs
+    public function getPriceWithTaxAttribute()
+    {
+        return number_format(
+            $this->price / 100 * (100 + 20) / 100,
+            2, ',', ' '
+        ).' €';
+    }
+
+    public function getPriceWithoutTaxAttribute()
+    {
+        return number_format(
+            $this->price / 100,
+            2, ',', ' '
+        ).' €';
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);

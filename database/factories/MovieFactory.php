@@ -22,6 +22,7 @@ class MovieFactory extends Factory
             'title' => fake()->sentence(3),
             'synopsis' => fake()->text(),
             'duration' => fake()->numberBetween(100, 200),
+            'price' => fake()->numberBetween(99, 9999),
             'youtube' => Str::random(8),
             'cover' => fake()->imageUrl(),
             'released_at' => fake()->date(),
